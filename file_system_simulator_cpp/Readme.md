@@ -18,3 +18,9 @@ Tech Stack
     STL Used: map, vector
     Other: File Handling (optional extension)
 
+Project Structure
+    file system simulator/
+    |--main.cpp
+    |--README.md
+
+    
