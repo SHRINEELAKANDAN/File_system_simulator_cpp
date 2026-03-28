@@ -1,6 +1,7 @@
 #include<iostream>
 #include<map>
 #include<vector>
+#include<string>
 
 using namespace std;
 
@@ -17,14 +18,15 @@ public:
 // Create File and Folder function
 void create(Node* current, string name, bool isfile)
 {
+    cout<<endl;
     if(current->children.count(name))
     {
-        cout<<"Already exists\n";
+        cout<< (isfile? "File " : "Folder ") <<name<<" already exists\n\n";
         return;
     }
 
     current->children[name]=new Node(name, isfile);
-    cout<< (isfile? "File" : "Folder") <<name<<"created\n";
+    cout<< (isfile? "File " : "Folder ") <<name<<" created\n\n";
 }
 
 void list(Node* current)
@@ -43,11 +45,11 @@ void remove(Node* current, string name)
     {
         delete it->second;
         current->children.erase(it);
-        cout<<name<<"deleted\n";
+        cout<<name<<" deleted\n\n";
     }
     else
     {
-        cout<<"Not found\n";
+        cout<<"Not found\n\n";
     }
 
 }
@@ -80,40 +82,43 @@ int main()
 
     while(run)
     {
+        cout<<endl;
         cout<<"**********File System Simulator**********\n";
-        cout<<"Enter your choice:\n";
         cout<<"1. Create File\n2. Create Folder\n3. List Contents\n4. Delete\n5. Search\n6. Exit\n";
+        cout<<"Enter your choice: ";
         cin>>choice;
+        cin.ignore(); // To ignore the newline character after entering choice
+        cout<<endl;
 
         switch (choice)
         {
             case 1:
                 cout<<"Enter File name: ";
-                cin>>name;
+                getline(cin, name);
                 create(current, name, true);
                 break;
             
             case 2:
                 cout<<"Enter Folder name: ";
-                cin>>name;
+                getline(cin, name);
                 create(current, name, false);
                 break;
             
             case 3:
-                cout<<"Contents of "<<current->name<<":\n";
+                cout<<"Contents of "<<current->name<<": \n\n";
                 list(current);
                 break;
 
             case 4:
                 cout<<"Enter the name of the File/Folder to delete: ";
-                cin>>name;
+                getline(cin, name);
                 remove(current, name);
                 break;
 
             case 5:
                 cout<<"Enter the File/Folder name to search: ";
-                cin>>name;
-                search(current, name);
+                getline(cin, name);
+                cout<< (search(current, name)? "Found" : "Not Found") <<endl<<endl;
                 break;
 
             case 6:
@@ -121,6 +126,7 @@ int main()
                 break;
 
         }
+        
     }
 
 }

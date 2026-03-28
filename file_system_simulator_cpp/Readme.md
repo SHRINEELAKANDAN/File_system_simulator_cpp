@@ -31,15 +31,82 @@ How to run
     ./fs    
 
 Sample Output
+    **********File System Simulator**********
     1. Create File
     2. Create Folder
-    3. List
+    3. List Contents
     4. Delete
     5. Search
     6. Exit
+    Enter your choice: 1
 
-    Input: 2 docs
-    Output: Folder docs created
+    Enter File name: cpp
+
+    File cpp created
+
+
+    **********File System Simulator**********
+    1. Create File
+    2. Create Folder
+    3. List Contents
+    4. Delete
+    5. Search
+    6. Exit
+    Enter your choice: 2
+
+    Enter Folder name: projects
+
+    Folder projects created
+
+
+    **********File System Simulator**********
+    1. Create File
+    2. Create Folder
+    3. List Contents
+    4. Delete
+    5. Search
+    6. Exit
+    Enter your choice: 3
+
+    Contents of root:
+
+    File: cpp
+    Folder: projects
+
+    **********File System Simulator**********
+    1. Create File
+    2. Create Folder
+    3. List Contents
+    4. Delete
+    5. Search
+    6. Exit
+    Enter your choice: 4
+
+    Enter the name of the File/Folder to delete: cpp
+    cpp deleted
+
+
+    **********File System Simulator**********
+    1. Create File
+    2. Create Folder
+    3. List Contents
+    4. Delete
+    5. Search
+    6. Exit
+    Enter your choice: 5
+
+    Enter the File/Folder name to search: projects
+    Found
+
+
+    **********File System Simulator**********
+    1. Create File
+    2. Create Folder
+    3. List Contents
+    4. Delete
+    5. Search
+    6. Exit
+    Enter your choice: 6
 
 Key Learnings
     1. Tree-based data structure design
