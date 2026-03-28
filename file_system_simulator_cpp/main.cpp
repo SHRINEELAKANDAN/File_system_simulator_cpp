@@ -38,6 +38,17 @@ void list(Node* current)
 
 void remove(Node* current, string name)
 {
+    auto it = current->children.find(name);
+    if(it != current->children.end())
+    {
+        delete it->second;
+        current->children.erase(it);
+        cout<<name<<"deleted\n";
+    }
+    else
+    {
+        cout<<"Not found\n";
+    }
 
 }
 
