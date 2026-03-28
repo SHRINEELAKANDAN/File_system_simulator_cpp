@@ -29,3 +29,75 @@ void create(Node* current, string name, bool isfile)
     current->children[name]=new Node(name, isfile);
     cout<< (isfile? "File" : "Folder") <<name<<"created\n";
 }
+
+void list(Node* current)
+{
+
+}
+
+void remove(Node* current, string name)
+{
+
+}
+
+void search(Node* current, string name)
+{
+
+}
+
+
+
+int main()
+{
+    Node* root=new Node("root", false);
+    Node* current = root;
+    int choice;
+    string name;
+    bool run=true;
+
+    while(run)
+    {
+        cout<<"**********File System Simulator**********\n";
+        cout<<"Enter your choice:\n";
+        cout<<"1. Create File\n2. Create Folder\n3. List Contents\n4. Delete\n5. Search\n6. Exit\n";
+        cin>>choice;
+
+        switch (choice)
+        {
+            case 1:
+                cout<<"Enter File name: ";
+                cin>>name;
+                create(current, name, true);
+                break;
+            
+            case 2:
+                cout<<"Enter Folder name: ";
+                cin>>name;
+                create(current, name, false);
+                break;
+            
+            case 3:
+                cout<<"Contents of "<<current->name<<":\n";
+                list(current);
+                break;
+
+            case 4:
+                cout<<"Enter the name of the File/Folder to delete: ";
+                cin>>name;
+                remove(current, name);
+                break;
+
+            case 5:
+                cout<<"Enter the File/Folder name to search: ";
+                cin>>name;
+                search(current, name);
+                break;
+
+            case 6:
+                run=false;
+                break;
+
+        }
+    }
+
+}
