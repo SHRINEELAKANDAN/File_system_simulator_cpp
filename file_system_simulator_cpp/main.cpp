@@ -52,9 +52,20 @@ void remove(Node* current, string name)
 
 }
 
-void search(Node* current, string name)
+bool search(Node* current, string name)
 {
-
+    if(current->name == name)
+    {
+        return true;
+    }
+    for (auto &child : current->children)
+    {
+        if(search(child.second, name))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 
