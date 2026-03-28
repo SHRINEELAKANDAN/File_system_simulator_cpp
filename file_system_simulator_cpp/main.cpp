@@ -14,9 +14,6 @@ public:
     Node(string name, bool isFile) : name(name), isFile(isFile) {}
 };
 
-// Root directory
-Node *root= new Node("root", false);
-
 // Create File and Folder function
 void create(Node* current, string name, bool isfile)
 {
@@ -33,6 +30,10 @@ void create(Node* current, string name, bool isfile)
 void list(Node* current)
 {
 
+        for(auto &child : current->children)
+        {
+            cout<<(child.second->isFile? "File: " : "Folder: ")<<child.first<<endl;
+        }
 }
 
 void remove(Node* current, string name)
