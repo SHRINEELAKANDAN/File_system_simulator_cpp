@@ -1,90 +1,112 @@
 #include<iostream>
-#include<map>
-#include<vector>
 #include<string>
+#include<filesystem>
+#include<limits>
+#include<fstream>
 
 using namespace std;
+namespace fs=filesystem;
 
-// Node structure to represent files and folders
-class Node {
-public:
-    string name;
-    bool isFile;
-    map<string, Node*> children;
-
-    Node(string name, bool isFile) : name(name), isFile(isFile) {}
-};
-
-// Create File and Folder function
-void create(Node* current, string name, bool isfile)
+// Create File 
+void create_file()
 {
     cout<<endl;
-    if(current->children.count(name))
+    cout<<"Enter File name: ";
+    string name;
+    getline(cin, name);
+    fs::path filepath=name;
+    ofstream file(filepath);
+    if(file)
     {
-        cout<< (isfile? "File " : "Folder ") <<name<<" already exists\n\n";
-        return;
-    }
-
-    current->children[name]=new Node(name, isfile);
-    cout<< (isfile? "File " : "Folder ") <<name<<" created\n\n";
-}
-
-void list(Node* current)
-{
-
-        for(auto &child : current->children)
-        {
-            cout<<(child.second->isFile? "File: " : "Folder: ")<<child.first<<endl;
-        }
-}
-
-void remove(Node* current, string name)
-{
-    auto it = current->children.find(name);
-    if(it != current->children.end())
-    {
-        delete it->second;
-        current->children.erase(it);
-        cout<<name<<" deleted\n\n";
+        cout<< "File '"<<name<<"' created\n";
     }
     else
     {
-        cout<<"Not found\n\n";
+        cout<<"Failed to create file\n";
+    }
+}
+
+void create_folder()
+{
+    cout<<endl;
+    cout<<"Enter Folder name: ";
+    string name;
+    getline(cin, name);
+    if(fs::create_directory(name))
+    {
+        cout<<"Folder '"<<name<<"' created\n";
+    }
+    else
+    {
+        cout<<"Failed to create folder\n";
     }
 
 }
 
-bool search(Node* current, string name)
+void list_entries()
 {
-    if(current->name == name)
-    {
-        return true;
-    }
-    for (auto &child : current->children)
-    {
-        if(search(child.second, name))
+
+        for(const auto& entry : fs::directory_iterator("."))
         {
-            return true;
+            cout<<(entry.is_directory()? "Folder: " : "File: ")
+                <<entry.path().filename()<<'\n';
+        }
+}
+
+void remove_entries()
+{
+    cout<<"Enter File/Folder name to delete: ";
+    string name;
+    getline(cin, name);
+    if(fs::exists(name))
+    {
+        if(fs::is_directory(name))
+        {
+            fs::remove_all(name);
+        }
+        else
+        {
+            fs::remove(name);
+        }
+        cout<<name<<" deleted successfully\n";
+    }
+    else
+    {
+        cout<<"File/Folder not found\n";
+    }
+}
+
+void search_entries()
+{
+    cout<<"Enter File/Folder name to search: ";
+    string name;
+    getline(cin, name);
+    bool found=false;
+    for(const auto& entry : fs::directory_iterator("."))
+    {
+        if(entry.path().filename()==name)
+        {
+            found=true;
+            break;
         }
     }
-    return false;
+    cout<<(found ? "Found\n" : "Not Found\n");
 }
 
 
 
 int main()
 {
-    Node* root=new Node("root", false);
-    Node* current = root;
+    fs::current_path(fs::current_path()); //Use current directory as a root
+    
     int choice;
-    string name;
-    bool run=true;
+    bool run=true;;
 
     while(run)
     {
         cout<<endl;
         cout<<"**********File System Simulator**********\n";
-        cout<<"1. Create File\n2. Create Folder\n3. List Contents\n4. Delete\n5. Search\n6. Exit\n";
+        cout<<"1. Create File\n2. Create Folder\n3. List \n4. Delete\n5. Search\n6. Exit\n";
         cout<<"Enter your choice: ";
         cin>>choice;
         cin.ignore(); // To ignore the newline character after entering choice
@@ -93,36 +115,31 @@ int main()
         switch (choice)
         {
             case 1:
-                cout<<"Enter File name: ";
-                getline(cin, name);
-                create(current, name, true);
+                create_file();
                 break;
             
             case 2:
-                cout<<"Enter Folder name: ";
-                getline(cin, name);
-                create(current, name, false);
+                create_folder();
                 break;
             
             case 3:
-                cout<<"Contents of "<<current->name<<": \n\n";
-                list(current);
+                list_entries();
                 break;
 
-            case 4:
-                cout<<"Enter the name of the File/Folder to delete: ";
-                getline(cin, name);
-                remove(current, name);
+            case 4:                
+                remove_entries();
                 break;
 
             case 5:
-                cout<<"Enter the File/Folder name to search: ";
-                getline(cin, name);
-                cout<< (search(current, name)? "Found" : "Not Found") <<endl<<endl;
+                search_entries();
                 break;
 
             case 6:
                 run=false;
+                break;
+            
+            default:
+                cout<<"Invalid choice. Please try again.\n\n";
                 break;
         }
         
