@@ -115,13 +115,7 @@ Project Structure
     file system simulator/
     |--main.cpp
     |--README.md
-
-How to run
-    git clone https://github.com/SHRINEELAKANDAN/file-system-simulator-cpp.git cd file-system-simulator-cpp/file_system_simulator_cpp
-
-    g++ -std=c++17 main.cpp -o fs
-
-    ./fs    
+  
 
 Sample Output
     **********File System Simulator**********
